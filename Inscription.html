@@ -6,150 +6,227 @@
 <title>Inscription Marketplace</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+background:linear-gradient(135deg,#667eea,#764ba2);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
 }
 
-/* CARD */
-.box{
-    background:white;
-    width:380px;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+.container{
+background:white;
+width:100%;
+max-width:500px;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
-/* TITLE */
 h2{
-    text-align:center;
-    margin-bottom:15px;
+text-align:center;
+margin-bottom:20px;
+color:#111;
 }
 
-/* INPUTS */
-input, select{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ddd;
-    border-radius:8px;
+.profile{
+text-align:center;
+margin-bottom:20px;
 }
 
-/* PROFILE PREVIEW */
-.profile-preview{
-    text-align:center;
-    margin-bottom:10px;
+.profile img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #ddd;
 }
 
-.profile-preview img{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    object-fit:cover;
-    border:2px solid #111;
+input,
+select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:15px;
 }
 
-/* BUTTON */
 button{
-    width:100%;
-    padding:12px;
-    background:#111;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
+width:100%;
+padding:14px;
+margin-top:10px;
+background:#111;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
 }
 
 button:hover{
-    background:#333;
+background:#333;
 }
 
-/* MESSAGE */
-#msg{
-    text-align:center;
-    margin-top:10px;
-    color:green;
+.info{
+margin-top:15px;
+text-align:center;
+color:#666;
 }
+
+.role-box{
+background:#f8f9fa;
+padding:10px;
+border-radius:10px;
+margin-top:10px;
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="box">
+<div class="container">
 
 <h2>Créer un compte</h2>
 
-<!-- PREVIEW PROFILE -->
-<div class="profile-preview">
-<img id="preview" src="https://via.placeholder.com/80">
+<div class="profile">
+
+<img
+src="images/default-user.jpg"
+alt="Profil">
+
 </div>
 
-<input type="file" id="photo" accept="image/*" onchange="loadImage(event)">
-<input type="text" id="nom" placeholder="Nom complet">
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Mot de passe">
+<input
+type="file">
+
+<input
+type="text"
+id="nom"
+placeholder="Nom complet">
+
+<input
+type="email"
+id="email"
+placeholder="Adresse e-mail">
+
+<input
+type="tel"
+id="telephone"
+placeholder="+243 XXX XXX XXX">
+
+<input
+type="password"
+id="password"
+placeholder="Mot de passe">
+
+<input
+type="password"
+id="confirm"
+placeholder="Confirmer le mot de passe">
+
+<div class="role-box">
 
 <select id="role">
-<option value="">Choisir rôle</option>
-<option value="client">Client</option>
-<option value="vendeur">Vendeur</option>
+
+<option value="">
+Choisir un type de compte
+</option>
+
+<option value="client">
+🛍️ Client
+</option>
+
+<option value="vendeur">
+🏪 Vendeur
+</option>
+
 </select>
 
-<button onclick="register()">Créer mon compte</button>
+</div>
 
-<p id="msg"></p>
+<button onclick="inscription()">
+S'inscrire
+</button>
+
+<div class="info">
+Déjà inscrit ? Connectez-vous.
+</div>
 
 </div>
 
 <script>
 
-// Charger image profil
-function loadImage(event){
-    let reader = new FileReader();
-    reader.onload = function(){
-        document.getElementById("preview").src = reader.result;
-    }
-    reader.readAsDataURL(event.target.files[0]);
+function inscription(){
+
+let nom =
+document.getElementById("nom").value;
+
+let email =
+document.getElementById("email").value;
+
+let telephone =
+document.getElementById("telephone").value;
+
+let password =
+document.getElementById("password").value;
+
+let confirm =
+document.getElementById("confirm").value;
+
+let role =
+document.getElementById("role").value;
+
+if(
+nom === "" ||
+email === "" ||
+telephone === "" ||
+password === "" ||
+confirm === "" ||
+role === ""
+){
+
+alert("Veuillez remplir tous les champs");
+
+return;
+
 }
 
-// inscription
-function register(){
+if(password !== confirm){
 
-    let nom = document.getElementById("nom").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let role = document.getElementById("role").value;
-    let photo = document.getElementById("preview").src;
+alert("Les mots de passe ne correspondent pas");
 
-    if(!nom || !email || !password || !role){
-        alert("Tous les champs sont obligatoires !");
-        return;
-    }
+return;
 
-    let user = {
-        id:Date.now(),
-        nom,
-        email,
-        password,
-        role,
-        photo,
-        panier:[],
-        favoris:[],
-        commandes:[]
-    };
-
-    localStorage.setItem("user_" + email, JSON.stringify(user));
-
-    document.getElementById("msg").innerText =
-    "Compte créé avec succès !";
-
-    console.log(user);
 }
+
+if(role === "client"){
+
+alert(
+"Compte Client créé avec succès 🛍️"
+);
+
+}
+
+if(role === "vendeur"){
+
+alert(
+"Compte Vendeur créé avec succès 🏪"
+);
+
+}
+
+}
+
 </script>
 
 </body>

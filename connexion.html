@@ -2,67 +2,202 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Connexion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion Marketplace</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    font-family:Arial;
+background:linear-gradient(135deg,#667eea,#764ba2);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
 }
 
-.box{
-    background:white;
-    padding:25px;
-    width:350px;
-    border-radius:15px;
+.container{
+background:white;
+width:100%;
+max-width:450px;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.logo{
+text-align:center;
+font-size:60px;
+margin-bottom:15px;
+}
+
+input,
+select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:8px;
 }
 
 button{
-    width:100%;
-    padding:10px;
-    background:#111;
-    color:white;
-    border:none;
+width:100%;
+padding:14px;
+background:#111;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
 }
+
+button:hover{
+background:#333;
+}
+
+.links{
+text-align:center;
+margin-top:15px;
+}
+
+.links a{
+text-decoration:none;
+color:#667eea;
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="box">
+<div class="container">
+
+<div class="logo">
+🏪
+</div>
+
 <h2>Connexion</h2>
 
-<input id="email" placeholder="Email">
-<input id="password" placeholder="Mot de passe">
+<input
+type="email"
+id="email"
+placeholder="Adresse e-mail">
 
-<button onclick="login()">Se connecter</button>
+<input
+type="password"
+id="password"
+placeholder="Mot de passe">
+
+<select id="role">
+
+<option value="">
+Choisir un compte
+</option>
+
+<option value="client">
+🛍️ Client
+</option>
+
+<option value="vendeur">
+🏪 Vendeur
+</option>
+
+<option value="admin">
+👑 Administrateur
+</option>
+
+</select>
+
+<button onclick="connexion()">
+Se connecter
+</button>
+
+<div class="links">
+
+<p>
+<a href="#">
+Mot de passe oublié ?
+</a>
+</p>
+
+<br>
+
+<p>
+Pas encore de compte ?
+<a href="inscription.html">
+S'inscrire
+</a>
+</p>
+
+</div>
+
 </div>
 
 <script>
-function login(){
-let email = document.getElementById("email").value;
-let password = document.getElementById("password").value;
 
-let user = JSON.parse(localStorage.getItem(email));
+function connexion(){
 
-if(user && user.password === password){
-alert("Bienvenue " + user.nom);
-localStorage.setItem("currentUser", JSON.stringify(user));
-window.location.href ="index.html";
-}else{
-alert("Erreur de connexion");
+let email =
+document.getElementById("email").value;
+
+let password =
+document.getElementById("password").value;
+
+let role =
+document.getElementById("role").value;
+
+if(
+email === "" ||
+password === "" ||
+role === ""
+){
+
+alert("Veuillez remplir tous les champs");
+
+return;
+
 }
+
+if(role === "client"){
+
+alert("Bienvenue Client 🛍️");
+
+window.location.href =
+"dashboard-client.html";
+
 }
+
+if(role === "vendeur"){
+
+alert("Bienvenue Vendeur 🏪");
+
+window.location.href =
+"dashboard-vendeur.html";
+
+}
+
+if(role === "admin"){
+
+alert("Bienvenue Administrateur 👑");
+
+window.location.href =
+"dashboard-admin.html";
+
+}
+
+}
+
 </script>
 
 </body>
